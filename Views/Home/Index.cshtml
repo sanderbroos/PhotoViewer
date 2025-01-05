@@ -1,4 +1,6 @@
-﻿@{
+﻿@using PhotoViewer.Data
+@model PhotosModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,10 +9,9 @@
 </div>
 
 <div class="image-grid">
-	@* <div class="image-item"> *@
-		<img src="https://cdn.myportfolio.com/daed2eb3-8b71-4138-becb-64df2093a364/120780e1-f390-416c-acb2-a4be5c8428e6_rw_1920.jpg?h=7515e979348fcda03e9fdbfecec71278" />
-	@* </div> *@
-	@* <div class="image-item"> *@
-		<img src="https://cdn.myportfolio.com/daed2eb3-8b71-4138-becb-64df2093a364/7e6ed530-8ac0-447f-831e-5d0f267ce965_rw_1920.jpg?h=83503a59d42e3999a3ce830a0556fc00" />
-	@* </div> *@
+	@foreach (Photo thePhoto in Model.Photos) {
+		@* <div class="image-item"> *@
+			<img src="@thePhoto.ThumbnailURL" />
+		@* </div> *@
+	}
 </div>

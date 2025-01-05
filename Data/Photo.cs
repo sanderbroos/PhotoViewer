@@ -1,4 +1,4 @@
-﻿namespace PhotoViewer.Models
+﻿namespace PhotoViewer.Data
 {
     public class Photo
     {
