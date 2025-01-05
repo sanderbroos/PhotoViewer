@@ -2,13 +2,15 @@
 
 class Photo
 {
-    ID:string;
-    ThumbnailURL:string;
-    Date:Date;
+    public ID:string;
+    public ThumbnailURL:string;
+    public Date:Date;
 
-	public constructor(photo:object)
+	public constructor(photo:Photo)
 	{
-
+		this.ID = photo.ID;
+		this.ThumbnailURL = photo.ThumbnailURL;
+		this.Date = new Date(<any>photo.Date);
 	}
 }
 
@@ -20,8 +22,10 @@ class Gallery
 	constructor(photos:Photo[])
 	{
 		this.photos = [];
-		for (let thePhoto of photos)
-			this.photos.push(new Photo(thePhoto));
+		if (photos != null) {
+			for (let thePhoto of photos)
+				this.photos.push(new Photo(thePhoto));
+		}
 
 		$('#myButton2023').click(() => this.setYear(2023));
 		$('#myButton2024').click(() => this.setYear(2024));
@@ -33,12 +37,14 @@ class Gallery
 	{
 		this.currentYear = year;
 		let theGrid = $('#myImageGrid').empty();
-		for (let thePhoto of this.photos) {
-			if (thePhoto.Date.getUTCFullYear() != this.currentYear)
-				continue;
-			let theImageItem = $('#myImageItemTemplate').children().clone();
-			theImageItem.find('img').attr('src', thePhoto.ThumbnailURL);
-			theGrid.append(theImageItem);
+		if (this.photos != null) {
+			for (let thePhoto of this.photos) {
+				if (thePhoto.Date.getUTCFullYear() != this.currentYear)
+					continue;
+				let theImageItem = $('#myImageItemTemplate').children().clone();
+				theImageItem.find('img').attr('src', thePhoto.ThumbnailURL);
+				theGrid.append(theImageItem);
+			}
 		}
 	}
 }

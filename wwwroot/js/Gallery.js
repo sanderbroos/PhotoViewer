@@ -1,6 +1,9 @@
 var $;
 class Photo {
     constructor(photo) {
+        this.ID = photo.ID;
+        this.ThumbnailURL = photo.ThumbnailURL;
+        this.Date = photo.Date;
     }
 }
 class Gallery {
