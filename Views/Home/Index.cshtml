@@ -8,10 +8,26 @@
     <h1 class="display-4">Sander Broos Photography</h1>
 </div>
 
-<div class="image-grid">
+<div class="d-flex justify-content-center gap-4">
+	<button id="myButton2023" class="btn btn-info">2023</button>
+	<button id="myButton2024" class="btn btn-info">2024</button>
+</div>
+
+<div id="myImageGrid" class="image-grid">
 	@foreach (Photo thePhoto in Model.Photos) {
 		@* <div class="image-item"> *@
 			<img src="@thePhoto.ThumbnailURL" />
 		@* </div> *@
 	}
 </div>
+
+<div id="myImageItemTemplate" style="display: none">
+	@*<div class="image-item"> *@
+		<img/>
+	@*</div> *@
+</div>
+
+@section Scripts {
+	<script src="js/Gallery.js"></script>
+	var theGallery = new Gallery(/*TODO: seriazeer Model.Photos hier*/);
+}
