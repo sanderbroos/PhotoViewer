@@ -42,7 +42,7 @@ class Gallery
 				if (thePhoto.Date.getUTCFullYear() != this.currentYear)
 					continue;
 				let theImageItem = $('#myImageItemTemplate').children().clone();
-				theImageItem.find('img').attr('src', thePhoto.ThumbnailURL);
+				theImageItem.find('img').addBack().attr('src', thePhoto.ThumbnailURL);
 				theGrid.append(theImageItem);
 			}
 		}

@@ -31,6 +31,9 @@
 @section Scripts {
 	<script src="js/Gallery.js"></script>
 	<script>
-		var theGallery = new Gallery(@Html.Raw(JsonConvert.SerializeObject(Model.Photos)));
+		var theGallery;
+		$(document).ready(function () {
+			theGallery = new Gallery(@Html.Raw(JsonConvert.SerializeObject(Model.Photos)));
+		});
 	</script>
 }
