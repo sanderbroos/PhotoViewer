@@ -4,13 +4,14 @@ var Photo = /** @class */ (function () {
         this.ID = photo.ID;
         this.ThumbnailURL = photo.ThumbnailURL;
         this.Date = new Date(photo.Date);
+        this.Width = photo.Width;
+        this.Height = photo.Height;
     }
     return Photo;
 }());
 var Gallery = /** @class */ (function () {
     function Gallery(photos) {
         var _this = this;
-        this.currentYear = 2023;
         this.photos = [];
         if (photos != null) {
             for (var _i = 0, photos_1 = photos; _i < photos_1.length; _i++) {

@@ -17,7 +17,7 @@
                 Image
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThumbnailURL)
+                Dimensions
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
@@ -33,7 +33,7 @@
                     <img src=@item.ThumbnailURL style="height: 150px;" />
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ThumbnailURL)
+                    @item.Width x @item.Height
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)

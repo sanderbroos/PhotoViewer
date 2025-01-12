@@ -4,20 +4,24 @@ class Photo
 {
     public ID:string;
     public ThumbnailURL:string;
-    public Date:Date;
+	public Date: Date;
+	public Width: number;
+	public Height: number;
 
 	public constructor(photo:Photo)
 	{
 		this.ID = photo.ID;
 		this.ThumbnailURL = photo.ThumbnailURL;
 		this.Date = new Date(<any>photo.Date);
+		this.Width = photo.Width;
+		this.Height = photo.Height;
 	}
 }
 
 class Gallery
 {
 	photos:Photo[];
-	currentYear:number = 2023;
+	currentYear:number;
 
 	constructor(photos:Photo[])
 	{
