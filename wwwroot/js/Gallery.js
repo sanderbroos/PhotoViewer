@@ -24,17 +24,20 @@ var Gallery = /** @class */ (function () {
         this.setYear(2023);
     }
     Gallery.prototype.setYear = function (year) {
+        var _this = this;
         this.currentYear = year;
-        var theGrid = $('#myImageGrid').empty();
         if (this.photos != null) {
-            for (var _i = 0, _a = this.photos; _i < _a.length; _i++) {
-                var thePhoto = _a[_i];
-                if (thePhoto.Date.getUTCFullYear() != this.currentYear)
-                    continue;
-                var theImageItem = $('#myImageItemTemplate').children().clone();
-                theImageItem.find('img').addBack().attr('src', thePhoto.ThumbnailURL);
-                theGrid.append(theImageItem);
-            }
+            var photos = this.photos.filter(function (photo) { return photo.Date.getUTCFullYear() == _this.currentYear; });
+            this.refillGrid(photos);
+        }
+    };
+    Gallery.prototype.refillGrid = function (photos) {
+        var theGrid = $('#myImageGrid').empty();
+        for (var _i = 0, photos_2 = photos; _i < photos_2.length; _i++) {
+            var thePhoto = photos_2[_i];
+            var theImageItem = $('#myImageItemTemplate').children().clone();
+            theImageItem.find('img').addBack().attr('src', thePhoto.ThumbnailURL);
+            theGrid.append(theImageItem);
         }
     };
     return Gallery;

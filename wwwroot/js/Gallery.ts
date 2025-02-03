@@ -40,15 +40,18 @@ class Gallery
 	private	setYear(year:number)
 	{
 		this.currentYear = year;
-		let theGrid = $('#myImageGrid').empty();
 		if (this.photos != null) {
-			for (let thePhoto of this.photos) {
-				if (thePhoto.Date.getUTCFullYear() != this.currentYear)
-					continue;
-				let theImageItem = $('#myImageItemTemplate').children().clone();
-				theImageItem.find('img').addBack().attr('src', thePhoto.ThumbnailURL);
-				theGrid.append(theImageItem);
-			}
+			const photos = this.photos.filter(photo => photo.Date.getUTCFullYear() == this.currentYear);
+			this.refillGrid(photos);
+		}
+	}
+
+	private refillGrid(photos: Photo[]) {
+		let theGrid = $('#myImageGrid').empty();
+		for (let thePhoto of photos) {
+			let theImageItem = $('#myImageItemTemplate').children().clone();
+			theImageItem.find('img').addBack().attr('src', thePhoto.ThumbnailURL);
+			theGrid.append(theImageItem);
 		}
 	}
 }
