@@ -47,11 +47,20 @@ class Gallery
 	}
 
 	private refillGrid(photos: Photo[]) {
-		let theGrid = $('#myImageGrid').empty();
-		for (let thePhoto of photos) {
-			let theImageItem = $('#myImageItemTemplate').children().clone();
-			theImageItem.find('img').addBack().attr('src', thePhoto.ThumbnailURL);
-			theGrid.append(theImageItem);
+		let theGrid: HTMLElement = document.querySelector('#myImageGrid');
+		theGrid.replaceChildren();
+		let rowDiv: HTMLDivElement = document.createElement("div");
+
+		for (let index = 0; index < photos.length; index++) {
+			let photo = photos[index];
+			let theJqImageItem = $('#myImageItemTemplate').children().clone();
+			theJqImageItem.find('img').addBack().attr('src', photo.ThumbnailURL);
+			rowDiv.appendChild(theJqImageItem[0]);
+
+			if (index % 2 == 1) {
+				theGrid.appendChild(rowDiv);
+				rowDiv = document.createElement("div");
+			}
 		}
 	}
 }

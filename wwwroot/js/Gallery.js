@@ -32,12 +32,18 @@ var Gallery = /** @class */ (function () {
         }
     };
     Gallery.prototype.refillGrid = function (photos) {
-        var theGrid = $('#myImageGrid').empty();
-        for (var _i = 0, photos_2 = photos; _i < photos_2.length; _i++) {
-            var thePhoto = photos_2[_i];
-            var theImageItem = $('#myImageItemTemplate').children().clone();
-            theImageItem.find('img').addBack().attr('src', thePhoto.ThumbnailURL);
-            theGrid.append(theImageItem);
+        var theGrid = document.querySelector('#myImageGrid');
+        theGrid.replaceChildren();
+        var rowDiv = document.createElement("div");
+        for (var index = 0; index < photos.length; index++) {
+            var photo = photos[index];
+            var theJqImageItem = $('#myImageItemTemplate').children().clone();
+            theJqImageItem.find('img').addBack().attr('src', photo.ThumbnailURL);
+            rowDiv.appendChild(theJqImageItem[0]);
+            if (index % 2 == 1) {
+                theGrid.appendChild(rowDiv);
+                rowDiv = document.createElement("div");
+            }
         }
     };
     return Gallery;
