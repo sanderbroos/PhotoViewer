@@ -21,10 +21,9 @@ body {
   margin-bottom: 60px;
 }
 .image-grid {
-  width: 40vw;
+  width: 450px;
   margin: auto auto;
 }
 .image-grid img {
-  width: inherit;
   margin: 10px;
 }

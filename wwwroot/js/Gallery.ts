@@ -51,10 +51,31 @@ class Gallery
 		theGrid.replaceChildren();
 		let rowDiv: HTMLDivElement = document.createElement("div");
 
-		for (let index = 0; index < photos.length; index++) {
+		let rowWidth = 400;
+		let rowCount = 1;
+
+		for (let index = 0; index < photos.length; index += rowCount) {
+			//let rowPhotos = photos.slice(index, Math.min(index + rowCount, photos.length));
+
+			//let denominator = 0;
+			//for (let rowIndex = 0; rowIndex < rowPhotos.length; rowIndex++) {
+			//	let numberToAdd = rowPhotos[rowIndex].Width;
+			//	for (let rowIndex2 = 0; rowIndex2 < rowPhotos.length; rowIndex2++) {
+			//		if (rowIndex2 != rowIndex) {
+			//			numberToAdd *= photos[rowIndex2].Height;
+			//		}
+			//	}
+			//	denominator += numberToAdd;
+			//}
+
+
+
 			let photo = photos[index];
 			let theJqImageItem = $('#myImageItemTemplate').children().clone();
-			theJqImageItem.find('img').addBack().attr('src', photo.ThumbnailURL);
+			let imageElement = theJqImageItem.find('img').addBack();
+			imageElement.attr('src', photo.ThumbnailURL);
+			imageElement.width(200);
+			
 			rowDiv.appendChild(theJqImageItem[0]);
 
 			if (index % 2 == 1) {
