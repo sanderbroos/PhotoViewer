@@ -34,10 +34,11 @@ var Gallery = /** @class */ (function () {
         var theGrid = document.querySelector('#myImageGrid');
         theGrid.replaceChildren();
         var rowCount = 4;
+        var rowWidth = theGrid.getBoundingClientRect().width;
         for (var index = 0; index < photos.length; index += rowCount) {
             var rowDiv = document.createElement("div");
             var rowPhotos = photos.slice(index, Math.min(index + rowCount, photos.length));
-            var photosWithScaleFactor = this.calculateImageScaleFactors(rowPhotos, theGrid.offsetWidth);
+            var photosWithScaleFactor = this.calculateImageScaleFactors(rowPhotos, rowWidth);
             for (var _i = 0, photosWithScaleFactor_1 = photosWithScaleFactor; _i < photosWithScaleFactor_1.length; _i++) {
                 var photo = photosWithScaleFactor_1[_i];
                 var theJqImageItem = $('#myImageItemTemplate').children().clone();
@@ -50,7 +51,7 @@ var Gallery = /** @class */ (function () {
             theGrid.appendChild(rowDiv);
         }
     };
-    // Calculate the factors to scale the photos in the row so that they have equal width
+    // Calculate the factors to scale the photos in the row so that they have equal height
     Gallery.prototype.calculateImageScaleFactors = function (photos, totalWidth) {
         var heightProduct = 1;
         var numerators = [];

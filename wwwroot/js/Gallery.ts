@@ -51,12 +51,13 @@ class Gallery
 		theGrid.replaceChildren();
 
 		let rowCount = 4;
+		let rowWidth = theGrid.getBoundingClientRect().width;
 
 		for (let index = 0; index < photos.length; index += rowCount) {
 			let rowDiv: HTMLDivElement = document.createElement("div");
 			let rowPhotos = photos.slice(index, Math.min(index + rowCount, photos.length));
 
-			let photosWithScaleFactor = this.calculateImageScaleFactors(rowPhotos, theGrid.offsetWidth)
+			let photosWithScaleFactor = this.calculateImageScaleFactors(rowPhotos, rowWidth)
 
 			for (var photo of photosWithScaleFactor) {
 				let theJqImageItem = $('#myImageItemTemplate').children().clone();
@@ -73,7 +74,7 @@ class Gallery
 		}
 	}
 
-	// Calculate the factors to scale the photos in the row so that they have equal width
+	// Calculate the factors to scale the photos in the row so that they have equal height
 	private calculateImageScaleFactors(photos: Photo[], totalWidth: number) {
 		let heightProduct = 1;
 		let numerators = [];
