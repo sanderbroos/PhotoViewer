@@ -24,42 +24,46 @@ var Gallery = /** @class */ (function () {
         this.setYear(2023);
     }
     Gallery.prototype.setYear = function (year) {
-        var _this = this;
         this.currentYear = year;
         if (this.photos != null) {
-            var photos = this.photos.filter(function (photo) { return photo.Date.getUTCFullYear() == _this.currentYear; });
+            var photos = this.photos.concat(this.photos).concat(this.photos).concat(this.photos); //.filter(photo => photo.Date.getUTCFullYear() == this.currentYear);
             this.refillGrid(photos);
         }
     };
     Gallery.prototype.refillGrid = function (photos) {
         var theGrid = document.querySelector('#myImageGrid');
         theGrid.replaceChildren();
-        var rowDiv = document.createElement("div");
-        var rowWidth = 400;
-        var rowCount = 1;
+        var rowCount = 4;
         for (var index = 0; index < photos.length; index += rowCount) {
-            //let rowPhotos = photos.slice(index, Math.min(index + rowCount, photos.length));
-            //let denominator = 0;
-            //for (let rowIndex = 0; rowIndex < rowPhotos.length; rowIndex++) {
-            //	let numberToAdd = rowPhotos[rowIndex].Width;
-            //	for (let rowIndex2 = 0; rowIndex2 < rowPhotos.length; rowIndex2++) {
-            //		if (rowIndex2 != rowIndex) {
-            //			numberToAdd *= photos[rowIndex2].Height;
-            //		}
-            //	}
-            //	denominator += numberToAdd;
-            //}
-            var photo = photos[index];
-            var theJqImageItem = $('#myImageItemTemplate').children().clone();
-            var imageElement = theJqImageItem.find('img').addBack();
-            imageElement.attr('src', photo.ThumbnailURL);
-            imageElement.width(200);
-            rowDiv.appendChild(theJqImageItem[0]);
-            if (index % 2 == 1) {
-                theGrid.appendChild(rowDiv);
-                rowDiv = document.createElement("div");
+            var rowDiv = document.createElement("div");
+            var rowPhotos = photos.slice(index, Math.min(index + rowCount, photos.length));
+            var photosWithScaleFactor = this.calculateImageScaleFactors(rowPhotos, theGrid.offsetWidth);
+            for (var _i = 0, photosWithScaleFactor_1 = photosWithScaleFactor; _i < photosWithScaleFactor_1.length; _i++) {
+                var photo = photosWithScaleFactor_1[_i];
+                var theJqImageItem = $('#myImageItemTemplate').children().clone();
+                var imageElement = theJqImageItem.find('img').addBack();
+                imageElement.attr('src', photo.photo.ThumbnailURL);
+                imageElement.width(photo.factor * photo.photo.Width);
+                imageElement.height(photo.factor * photo.photo.Height);
+                rowDiv.appendChild(theJqImageItem[0]);
             }
+            theGrid.appendChild(rowDiv);
         }
+    };
+    // Calculate the factors to scale the photos in the row so that they have equal width
+    Gallery.prototype.calculateImageScaleFactors = function (photos, totalWidth) {
+        var heightProduct = 1;
+        var numerators = [];
+        for (var i = 0; i < photos.length; i++) {
+            heightProduct *= photos[i].Height;
+        }
+        var denominator = 0;
+        for (var rowIndex = 0; rowIndex < photos.length; rowIndex++) {
+            var productWithoutCurrent = heightProduct / photos[rowIndex].Height;
+            denominator += productWithoutCurrent * photos[rowIndex].Width;
+            numerators.push({ photo: photos[rowIndex], numerator: productWithoutCurrent * totalWidth });
+        }
+        return numerators.map(function (n) { return { photo: n.photo, factor: n.numerator / denominator }; });
     };
     return Gallery;
 }());

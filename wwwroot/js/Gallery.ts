@@ -41,7 +41,7 @@ class Gallery
 	{
 		this.currentYear = year;
 		if (this.photos != null) {
-			const photos = this.photos.filter(photo => photo.Date.getUTCFullYear() == this.currentYear);
+			const photos = this.photos.concat(this.photos).concat(this.photos).concat(this.photos)//.filter(photo => photo.Date.getUTCFullYear() == this.currentYear);
 			this.refillGrid(photos);
 		}
 	}
@@ -49,39 +49,46 @@ class Gallery
 	private refillGrid(photos: Photo[]) {
 		let theGrid: HTMLElement = document.querySelector('#myImageGrid');
 		theGrid.replaceChildren();
-		let rowDiv: HTMLDivElement = document.createElement("div");
 
-		let rowWidth = 400;
-		let rowCount = 1;
+		let rowCount = 4;
 
 		for (let index = 0; index < photos.length; index += rowCount) {
-			//let rowPhotos = photos.slice(index, Math.min(index + rowCount, photos.length));
+			let rowDiv: HTMLDivElement = document.createElement("div");
+			let rowPhotos = photos.slice(index, Math.min(index + rowCount, photos.length));
 
-			//let denominator = 0;
-			//for (let rowIndex = 0; rowIndex < rowPhotos.length; rowIndex++) {
-			//	let numberToAdd = rowPhotos[rowIndex].Width;
-			//	for (let rowIndex2 = 0; rowIndex2 < rowPhotos.length; rowIndex2++) {
-			//		if (rowIndex2 != rowIndex) {
-			//			numberToAdd *= photos[rowIndex2].Height;
-			//		}
-			//	}
-			//	denominator += numberToAdd;
-			//}
+			let photosWithScaleFactor = this.calculateImageScaleFactors(rowPhotos, theGrid.offsetWidth)
 
+			for (var photo of photosWithScaleFactor) {
+				let theJqImageItem = $('#myImageItemTemplate').children().clone();
+				let imageElement = theJqImageItem.find('img').addBack();
+				imageElement.attr('src', photo.photo.ThumbnailURL);
 
-
-			let photo = photos[index];
-			let theJqImageItem = $('#myImageItemTemplate').children().clone();
-			let imageElement = theJqImageItem.find('img').addBack();
-			imageElement.attr('src', photo.ThumbnailURL);
-			imageElement.width(200);
+				imageElement.width(photo.factor * photo.photo.Width);
+				imageElement.height(photo.factor * photo.photo.Height);
 			
-			rowDiv.appendChild(theJqImageItem[0]);
-
-			if (index % 2 == 1) {
-				theGrid.appendChild(rowDiv);
-				rowDiv = document.createElement("div");
+				rowDiv.appendChild(theJqImageItem[0]);
 			}
+
+			theGrid.appendChild(rowDiv);
 		}
+	}
+
+	// Calculate the factors to scale the photos in the row so that they have equal width
+	private calculateImageScaleFactors(photos: Photo[], totalWidth: number) {
+		let heightProduct = 1;
+		let numerators = [];
+
+		for (let i = 0; i < photos.length; i++) {
+			heightProduct *= photos[i].Height;
+		}
+
+		let denominator = 0;
+		for (let rowIndex = 0; rowIndex < photos.length; rowIndex++) {
+			let productWithoutCurrent = heightProduct / photos[rowIndex].Height;
+			denominator += productWithoutCurrent * photos[rowIndex].Width;
+			numerators.push({ photo: photos[rowIndex], numerator: productWithoutCurrent * totalWidth});
+		}
+
+		return numerators.map((n) => { return { photo: n.photo, factor: n.numerator / denominator } });
 	}
 }
