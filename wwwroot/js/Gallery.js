@@ -21,8 +21,12 @@ var Gallery = /** @class */ (function () {
         }
         $('#myButton2023').click(function () { return _this.setYear(2023); });
         $('#myButton2024').click(function () { return _this.setYear(2024); });
+        window.addEventListener('resize', function () { return _this.resizeGrid(); });
         this.setYear(2023);
     }
+    Gallery.prototype.resizeGrid = function () {
+        this.setYear(this.currentYear);
+    };
     Gallery.prototype.setYear = function (year) {
         this.currentYear = year;
         if (this.photos != null) {

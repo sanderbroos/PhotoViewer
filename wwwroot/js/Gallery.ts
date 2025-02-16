@@ -33,8 +33,13 @@ class Gallery
 
 		$('#myButton2023').click(() => this.setYear(2023));
 		$('#myButton2024').click(() => this.setYear(2024));
+		window.addEventListener('resize', () => this.resizeGrid());
 
 		this.setYear(2023);
+	}
+
+	private resizeGrid() {
+		this.setYear(this.currentYear);
 	}
 
 	private	setYear(year:number)
