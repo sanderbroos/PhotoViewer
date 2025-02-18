@@ -21,7 +21,10 @@ body {
   margin-bottom: 60px;
 }
 .image-grid {
-  width: 100%;
+  width: 90%;
   margin: auto auto;
   white-space: nowrap;
+}
+.image-grid img {
+  padding: 0.5%;
 }

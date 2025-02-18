@@ -37,7 +37,7 @@ var Gallery = /** @class */ (function () {
     Gallery.prototype.refillGrid = function (photos) {
         var theGrid = document.querySelector('#myImageGrid');
         theGrid.replaceChildren();
-        var rowCount = 4;
+        var rowCount = 3;
         var rowWidth = theGrid.getBoundingClientRect().width;
         for (var index = 0; index < photos.length; index += rowCount) {
             var rowDiv = document.createElement("div");

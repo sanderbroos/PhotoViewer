@@ -55,7 +55,7 @@ class Gallery
 		let theGrid: HTMLElement = document.querySelector('#myImageGrid');
 		theGrid.replaceChildren();
 
-		let rowCount = 4;
+		let rowCount = 3;
 		let rowWidth = theGrid.getBoundingClientRect().width;
 
 		for (let index = 0; index < photos.length; index += rowCount) {
