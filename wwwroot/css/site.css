@@ -18,10 +18,14 @@ html {
   min-height: 100%;
 }
 body {
+  font-family: "Montserrat";
   margin-bottom: 60px;
 }
+.page-title {
+  font-weight: 100;
+}
 .image-grid {
-  width: 90%;
+  width: 99%;
   margin: auto auto;
   white-space: nowrap;
 }
