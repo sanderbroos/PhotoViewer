@@ -46,7 +46,8 @@ class Gallery
 	{
 		this.currentYear = year;
 		if (this.photos != null) {
-			const photos = this.photos.concat(this.photos).concat(this.photos).concat(this.photos)//.filter(photo => photo.Date.getUTCFullYear() == this.currentYear);
+			var photos = this.photos.filter(photo => photo.Date.getUTCFullYear() == this.currentYear);
+			photos = photos.concat(photos).concat(photos).concat(photos)
 			this.refillGrid(photos);
 		}
 	}

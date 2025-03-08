@@ -28,9 +28,11 @@ var Gallery = /** @class */ (function () {
         this.setYear(this.currentYear);
     };
     Gallery.prototype.setYear = function (year) {
+        var _this = this;
         this.currentYear = year;
         if (this.photos != null) {
-            var photos = this.photos.concat(this.photos).concat(this.photos).concat(this.photos); //.filter(photo => photo.Date.getUTCFullYear() == this.currentYear);
+            var photos = this.photos.filter(function (photo) { return photo.Date.getUTCFullYear() == _this.currentYear; });
+            photos = photos.concat(photos).concat(photos).concat(photos);
             this.refillGrid(photos);
         }
     };
